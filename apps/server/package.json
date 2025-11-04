@@ -6,7 +6,9 @@
   "scripts": {
     "dev": " concurrently \"tsx --watch ./src/server.ts\" \"npm run stripe\" ",
     "stripe": "stripe listen --forward-to localhost:4000/api/v1/orders/checkout/webhooks",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",

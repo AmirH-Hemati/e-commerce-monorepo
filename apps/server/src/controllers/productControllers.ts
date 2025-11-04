@@ -14,36 +14,36 @@ import Product, { ProductDocument } from "../models/productModels.js";
 import AppError from "../utils/AppError.js";
 import catchAsync from "../utils/catchAsync.js";
 
-const multerStorage = multer.memoryStorage();
+// const multerStorage = multer.memoryStorage();
 
-const multerFilter = (
-  req: Express.Request,
-  file: Express.Multer.File,
-  cb: Function
-) => {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new AppError("لطفا فقط عکس اپلود کنید .", 400), false);
-  }
-};
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+// const multerFilter = (
+//   req: Express.Request,
+//   file: Express.Multer.File,
+//   cb: Function
+// ) => {
+//   if (file.mimetype.startsWith("image")) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError("لطفا فقط عکس اپلود کنید .", 400), false);
+//   }
+// };
+// const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
-export const uploadProductImage = upload.single("images");
+// export const uploadProductImage = upload.single("images");
 
-export const resizeProductImage = catchAsync(async (req, res, next) => {
-  if (!req.file) return next();
+// export const resizeProductImage = catchAsync(async (req, res, next) => {
+//   if (!req.file) return next();
 
-  req.body.imageCover = `product-${Date.now()}-cover.png`;
+//   req.body.imageCover = `product-${Date.now()}-cover.png`;
 
-  await sharp(req.file.buffer)
-    .resize(2000, 1333)
-    .toFormat("png")
-    .png({ quality: 90 })
-    .toFile(`public/img/products/${req.body.imageCover}`);
+//   await sharp(req.file.buffer)
+//     .resize(2000, 1333)
+//     .toFormat("png")
+//     .png({ quality: 90 })
+//     .toFile(`public/img/products/${req.body.imageCover}`);
 
-  next();
-});
+//   next();
+// });
 
 // exports.findCategoryIdByValue = catchAsync(async (req, res, next) => {
 //   const { category } = req.query;

@@ -17,7 +17,7 @@ const orderSchema = z.object({
     city: z.string(),
   }),
   totalAmount: z.number().min(0),
-  status: z.enum(["Pending", "paid", "Shipped", "delivered"]),
+  status: z.enum(["Pending", "Paid", "Shipped", "delivered"]),
   createdAt: z.string().optional(),
   updatedAt: z.string().optional(),
 });

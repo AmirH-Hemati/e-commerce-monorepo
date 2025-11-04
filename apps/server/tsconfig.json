@@ -4,6 +4,7 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,

@@ -1,3 +1,3 @@
-export * from "./product.ts";
-export * from "./order.ts";
-export * from "./user.ts";
+export * from "./product.js";
+export * from "./order.js";
+export * from "./user.js";

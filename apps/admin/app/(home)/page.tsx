@@ -5,11 +5,12 @@ import CardList from "@/components/CardList";
 import AppAreaChart from "@/features/dashboard/components/AppAreaChart";
 import { useLatestOrders } from "@/features/orders/hooks/useLatestOrders";
 import { useLatestProducts } from "@/features/products/hooks/useLatestProducts";
+import Spinner from "@/components/Spinner";
 
 export default function Home() {
   const { orders, isLoading } = useLatestOrders();
   const { products, isLoading: isLoading2 } = useLatestProducts();
-  if (isLoading || isLoading2) return <p>isloading</p>;
+  if (isLoading || isLoading2) return <Spinner />;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">

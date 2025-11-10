@@ -17,20 +17,12 @@ import { Badge } from "@/components/ui/badge";
 import AddUserForm from "@/features/users/components/AddUserForm";
 import { useGetUser } from "@/features/users/hooks/useGetUser";
 import { useRecentOrder } from "@/features/orders/hooks/useRecentOrder";
-
-// const user = {
-//   id: "1",
-//   fullName: "Amir Hemati",
-//   email: "amir@gmail.com",
-//   phone: "09123456789",
-//   address: "esf,hasht behesht",
-//   city: "esfahan",
-// };
+import Spinner from "@/components/Spinner";
 
 export default function Page() {
   const { user, isLoading } = useGetUser();
   const { orders, isLoading: isLoading2 } = useRecentOrder();
-  if (isLoading || isLoading2) return <p>isloading</p>;
+  if (isLoading || isLoading2) return <Spinner />;
   return (
     <div>
       <Breadcrumb>

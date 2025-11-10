@@ -1,4 +1,5 @@
 "use client";
+import Spinner from "@/components/Spinner";
 import {
   ChartContainer,
   ChartLegend,
@@ -24,7 +25,7 @@ const chartConfig = {
 const AppAreaChart = () => {
   const { orders, isLoading } = useGetMonthlySales();
 
-  if (isLoading) return <p>islaoding</p>;
+  if (isLoading) return <Spinner />;
   return (
     <div className="">
       <h1 className="text-lg font-medium mb-6">Total Visitors</h1>

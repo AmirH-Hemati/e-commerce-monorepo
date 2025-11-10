@@ -1,12 +1,12 @@
 "use client";
 import { DataTable } from "@/components/DataTable";
+import Spinner from "@/components/Spinner";
 import { columns } from "@/features/orders/components/columns";
 import { useGetUsers } from "@/features/users/hooks/useGetUsers";
 
 export default function Page() {
-  // const users = await getData();
   const { users, isLoading } = useGetUsers();
-  if (isLoading) return <p>isloading</p>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="">

@@ -1,29 +1,18 @@
 "use client";
-import Link from "next/link";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarSeparator,
-} from "./ui/sidebar";
+import AddUserForm from "@/features/users/components/AddUserForm";
 import {
   ChevronUp,
-  LayoutDashboard,
   LayoutDashboardIcon,
   LogOut,
   Plus,
   Settings,
   Shirt,
+  ShoppingBag,
   User,
   User2,
 } from "lucide-react";
+import Link from "next/link";
+import AddProductForm from "../features/products/components/AddProductForm";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,24 +20,31 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Sheet, SheetTrigger } from "./ui/sheet";
-import AddProductForm from "../features/products/components/AddProductForm";
-import AddCategory from "@/features/products/components/AddCategory";
-import AddUserForm from "@/features/users/components/AddUserForm";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarSeparator,
+} from "./ui/sidebar";
 
 export default function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       {/* sidebar header  */}
 
-      <SidebarHeader className="py-4 mb-4">
+      <SidebarHeader className="py-4 ">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/">
-                <LayoutDashboard />
-                <span className="text-2xl font-bold text-center">
-                  Admin Panel
-                </span>
+                <ShoppingBag />
+                <span className="text-xl font-bold ">TRENDSHOP</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -62,8 +58,6 @@ export default function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -78,8 +72,6 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Products</SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -108,8 +100,6 @@ export default function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Products</SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -138,8 +128,6 @@ export default function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Add Order</SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>

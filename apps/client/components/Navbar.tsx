@@ -1,9 +1,9 @@
+import UserProfileIcon from "@/features/Authentication/UserProfileIcon";
+import { Home } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
-import { Bell, Home } from "lucide-react";
 import ShoppingCartIcon from "./ShoppingCartIcon";
-import UserProfileIcon from "@/features/Authentication/UserProfileIcon";
 
 export default function Navbar() {
   return (
@@ -18,7 +18,7 @@ export default function Navbar() {
           className="w-6 h-6 md:w-9 md:h-9"
         />
         <p className="hidden md:block text-md font-medium tracking-wider">
-          TRENDLAMA.
+          TRENDSHOP
         </p>
       </Link>
       {/* RIGHT */}
@@ -27,7 +27,6 @@ export default function Navbar() {
         <Link href="/">
           <Home className="w-4 h-4 text-gray-600" />
         </Link>
-        <Bell className="w-4 h-4 text-gray-600" />
         <ShoppingCartIcon />
         <UserProfileIcon />
       </div>

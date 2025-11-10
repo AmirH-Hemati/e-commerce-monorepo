@@ -11,6 +11,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useGetOrderStatus } from "@/features/orders/hooks/useGetOrderStatus";
+import Spinner from "@/components/Spinner";
 
 export const description = "A donut chart with text";
 
@@ -40,7 +41,7 @@ type OrderStatus = "Pending" | "Paid" | "Processing" | "Shipped" | "Delivered";
 
 export function AppPieChart() {
   const { orders, isLoading } = useGetOrderStatus();
-  if (isLoading) return <p>islaoding</p>;
+  if (isLoading) return <Spinner />;
   return (
     <div>
       <h1 className="text-lg font-medium mb-6">Status Orders</h1>

@@ -1,5 +1,6 @@
 "use client";
 
+import Spinner from "@/components/Spinner";
 import {
   ChartContainer,
   ChartLegend,
@@ -21,7 +22,7 @@ const chartConfig = {
 
 export default function PaymentStatusBarChart() {
   const { orders, isLoading } = useGetOrderStatus();
-  if (isLoading) return <p>isloading</p>;
+  if (isLoading) return <Spinner />;
   return (
     <div>
       <h1 className="text-lg font-medium mb-6">Orders by Payment Status</h1>

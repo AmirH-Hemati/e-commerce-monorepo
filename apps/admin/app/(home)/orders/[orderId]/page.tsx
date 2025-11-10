@@ -19,6 +19,7 @@ import { useShipping } from "@/features/orders/hooks/useShipping";
 import { useDelivering } from "@/features/orders/hooks/useDelivering";
 import { useDeleteOrder } from "@/features/orders/hooks/useDeleteOrder";
 import OrderDataBox from "@/features/orders/components/OrderDataBox";
+import Spinner from "@/components/Spinner";
 
 export default function Page() {
   const { order, isLoading } = useGetOrderDetails();
@@ -27,7 +28,7 @@ export default function Page() {
   const { deleteOrder, isDeleting } = useDeleteOrder();
   const { delivering, isDelivering } = useDelivering();
   const router = useRouter();
-  if (isLoading) return <p>Isloading</p>;
+  if (isLoading) return <Spinner />;
   return (
     <div className="flex flex-col">
       <Breadcrumb>

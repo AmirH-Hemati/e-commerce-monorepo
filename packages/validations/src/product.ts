@@ -1,33 +1,40 @@
 import { z } from "zod";
 
-export const productSchema = z.object({
-  _id: z.string().optional(),
+export const baseProductSchema = z.object({
   name: z.string().min(1, { message: "Product name is required!" }),
-  slug: z.string().optional(),
   shortDescription: z
     .string()
     .min(1, { message: "Short description is required!" })
     .max(60),
   description: z.string().min(1, { message: "Description is required!" }),
   price: z.number().min(1, { message: "Price is required!" }),
-  category: z.string().min(1, { message: "category is required!" }),
-  sizes: z.array(z.string()).min(1, { message: "sizes is required!" }),
-  colors: z.array(z.string()).min(1, { message: "colors is required!" }),
+  category: z.string().min(1, { message: "Category is required!" }),
+  sizes: z.array(z.string()).min(1, { message: "Sizes is required!" }),
+  colors: z.array(z.string()).min(1, { message: "Colors is required!" }),
   images: z
     .array(z.record(z.string(), z.string()))
     .min(1, { message: "images is required!" }),
-  createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
 });
 
-export type Product = z.infer<typeof productSchema>;
-export type ProductsList = z.infer<typeof productSchema>[];
+export const productSchemaServer = baseProductSchema;
+export const productSchemaClient = baseProductSchema.extend({
+  _id: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
 
-export type CartItemTypes = Product & {
+export type ProductBase = z.infer<typeof baseProductSchema>;
+export type ProductClient = z.infer<typeof productSchemaClient>;
+export type ProductServer = z.infer<typeof productSchemaServer>;
+
+export type ProductsList = z.infer<typeof productSchemaClient>[];
+
+export type CartItemTypes = ProductClient & {
   qty: number;
   selectedColor: string;
   selectedSize: string;
 };
+
 export type CartItemsTypes = CartItemTypes[];
 
 export const addressSchema = z.object({

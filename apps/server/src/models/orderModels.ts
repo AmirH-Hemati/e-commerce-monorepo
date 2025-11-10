@@ -1,8 +1,8 @@
-import mongoose, { Document, Query } from "mongoose";
-import { Order } from "@repo/validation";
+import { OrderSchema } from "@repo/validation";
+import mongoose, { Document, Query, Types } from "mongoose";
 
-export interface OrderDocument extends Omit<Order, "_id">, Document {
-  _id: mongoose.Types.ObjectId;
+export interface OrderDocument extends Document, OrderSchema {
+  _id: Types.ObjectId;
 }
 
 const orderSchema = new mongoose.Schema<OrderDocument>(
@@ -48,4 +48,4 @@ orderSchema.pre<Query<OrderDocument[], OrderDocument>>(
   }
 );
 
-export default mongoose.model("Order", orderSchema);
+export default mongoose.model<OrderDocument>("Order", orderSchema);

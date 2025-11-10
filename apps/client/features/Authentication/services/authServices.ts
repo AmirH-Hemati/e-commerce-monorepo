@@ -1,4 +1,4 @@
-import { LoginFormInputs, User } from "@repo/validation";
+import { LoginFormInputs, RegisterClient } from "@repo/validation";
 
 export async function getCurrentUser() {
   const res = await fetch("http://localhost:4000/api/v1/users/me", {
@@ -11,7 +11,7 @@ export async function getCurrentUser() {
   return data;
 }
 
-export async function signup(data: User) {
+export async function signup(data: RegisterClient) {
   const res = await fetch("http://localhost:4000/api/v1/users/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

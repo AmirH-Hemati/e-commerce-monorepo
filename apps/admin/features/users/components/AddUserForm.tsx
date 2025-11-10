@@ -1,7 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import {
   Form,
@@ -29,36 +28,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-const userSchema = z.object({
-  name: z.string().min(2).max(50),
-  email: z.email({ message: "Invalid email address!" }),
-  role: z.string(),
-});
+import { useCreateUser } from "../hooks/useCreateUser";
+import { useUpdateUser } from "../hooks/useUpdateUser";
+import { registerFullSchema, RegisterFull } from "@repo/validation";
 
-type userType = z.infer<typeof userSchema>;
+export default function AddUserForm({ user }: { user?: RegisterFull }) {
+  const { createUser, isCreating } = useCreateUser();
+  const { updateUser, isUpdating } = useUpdateUser();
 
-type userWithId = userType & { id: string };
-export default function AddUserForm({ user }: { user?: userWithId }) {
   const isEditSession = Boolean(user?._id);
-  const form = useForm<userType>({
-    resolver: zodResolver(userSchema),
+  const isWorking = isCreating || isUpdating;
+  const form = useForm<RegisterFull>({
+    resolver: zodResolver(registerFullSchema),
 
     defaultValues: isEditSession
       ? user
       : {
           name: "",
           email: "",
-          role: "",
+          role: "user",
           password: "",
-          confimPassword: "",
         },
   });
 
-  function submitUserForm(data: userType) {
+  function submitUserForm(data: RegisterFull) {
     if (isEditSession) {
-      console.log("updated User", data);
+      updateUser(
+        { data, id: user?._id as string },
+        { onSuccess: () => form.reset() }
+      );
     } else {
-      console.log("created new User", data);
+      createUser(data, { onSuccess: () => form.reset() });
     }
   }
   return (
@@ -139,23 +139,7 @@ export default function AddUserForm({ user }: { user?: userWithId }) {
                       <FormItem>
                         <FormLabel>password</FormLabel>
                         <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormDescription>
-                          Only admin can see your email.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
+                          <Input {...field} required />
                         </FormControl>
                         <FormDescription>
                           Only admin can see your email.
@@ -166,7 +150,9 @@ export default function AddUserForm({ user }: { user?: userWithId }) {
                   />
                 </>
               )}
-              <Button type="submit">Create New User</Button>
+              <Button type="submit" disabled={isWorking}>
+                {isEditSession ? "Edit User" : "Create New User"}
+              </Button>
             </form>
           </Form>
         </SheetDescription>

@@ -1,6 +1,12 @@
 import AppError from "../utils/AppError.js";
 import catchAsync from "../utils/catchAsync.js";
-import { deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";
+import {
+  createOne,
+  deleteOne,
+  getAll,
+  getOne,
+  updateOne,
+} from "./handlerFactory.js";
 import UserModel, { UserDocument } from "../models/userModel.js";
 import { NextFunction, Request, Response } from "express";
 
@@ -28,7 +34,6 @@ import { NextFunction, Request, Response } from "express";
 // };
 export const getMe = (req: Request, res: Response, next: NextFunction) => {
   req.params.id = req.user._id.toString();
-  console.log(req.params.id);
   next();
 };
 
@@ -72,16 +77,8 @@ export const deleteMe = catchAsync(
   }
 );
 
-export const createUser = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.status(500).json({
-      status: "error",
-      message: "This route is not defined! Please use /signup ",
-    });
-  }
-);
-
 export const getAllUser = getAll<UserDocument>(UserModel);
 export const getUser = getOne<UserDocument>(UserModel);
+export const createUser = createOne<UserDocument>(UserModel);
 export const updateUser = updateOne<UserDocument>(UserModel);
 export const deleteUser = deleteOne<UserDocument>(UserModel);

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signup as signupApi } from "../services/authServices";
-import { User } from "@repo/validation";
+import { RegisterClient } from "@repo/validation";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +9,7 @@ export function useSignup() {
   const router = useRouter();
 
   const { mutate: signup, isPending } = useMutation({
-    mutationFn: (data: User) => signupApi(data),
+    mutationFn: (data: RegisterClient) => signupApi(data),
 
     onSuccess: ({ user }) => {
       queryClient.setQueryData(["user"], user);

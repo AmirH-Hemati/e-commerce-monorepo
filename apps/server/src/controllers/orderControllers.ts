@@ -6,13 +6,14 @@ import {
   updateOne,
 } from "./handlerFactory.js";
 
-import { CartItemsTypes, CartItemTypes, Address } from "@repo/validation";
+import { Address, CartItemsTypes, CartItemTypes } from "@repo/validation";
 import { NextFunction, Request, Response } from "express";
 import Stripe from "stripe";
+import Order, { OrderDocument } from "../models/orderModels.js";
 import ProductModel from "../models/productModels.js";
 import AppError from "../utils/AppError.js";
 import catchAsync from "../utils/catchAsync.js";
-import Order, { OrderDocument } from "../models/orderModels.js";
+import { Types } from "mongoose";
 
 const stripe = new Stripe(process.env.STRIPE_KEY as string);
 

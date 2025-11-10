@@ -3,29 +3,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { registerSchema, User } from "@repo/validation";
+import { registerSchemaClient, RegisterClient } from "@repo/validation";
 import { useSignup } from "@/features/Authentication/hooks/useSignup";
-// const signupSchema = z
-//   .object({
-//     name: z.string().min(3, "Full name must be at least 3 characters"),
-//     email: z.email("Invalid email address"),
-//     password: z.string().min(8, "Password must be at least 8 characters"),
-//     confirmPassword: z.string().min(8, "Confirm your password"),
-//   })
-//   .refine((data) => data.password === data.confirmPassword, {
-//     message: "Passwords do not match",
-//     path: ["confirmPassword"],
-//   });
-
-// type SignupFormInputs = z.infer<typeof signupSchema>;
 
 export default function SignUpPage() {
   const { signup, isPending } = useSignup();
-  const form = useForm<User>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<RegisterClient>({
+    resolver: zodResolver(registerSchemaClient),
   });
 
-  const onSubmit = (data: User) => {
+  const onSubmit = (data: RegisterClient) => {
     signup(data);
   };
 

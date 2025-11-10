@@ -5,12 +5,13 @@ import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@repo/validation";
+import { ProductClient } from "@repo/validation";
 import useCartStore from "@/stores/cartStore";
+import { useRouter } from "next/navigation";
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product }: { product: ProductClient }) => {
+  const router = useRouter();
   const { handleIncreaseProduct } = useCartStore();
-
   const [productTypes, setProductTypes] = useState<{
     size: string;
     color: string;
@@ -37,8 +38,11 @@ const ProductCard = ({ product }: { product: Product }) => {
       ...product,
       selectedColor: productTypes.color,
       selectedSize: productTypes.size,
+      qty: 1,
     });
+
     toast.success("Product added to cart");
+    router.push(`/products/${product._id}`);
   };
 
   const image =

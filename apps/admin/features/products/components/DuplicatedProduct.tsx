@@ -1,8 +1,12 @@
 import React from "react";
 import { useCreateProduct } from "../hooks/useCreateProduct";
-import { Product } from "@repo/validation";
+import { ProductClient } from "@repo/validation";
 
-export default function DuplicatedProduct({ product }: { product: Product }) {
+export default function DuplicatedProduct({
+  product,
+}: {
+  product: ProductClient;
+}) {
   const { createProduct, isCreating } = useCreateProduct();
   function handelDublicatedProduct() {
     createProduct({

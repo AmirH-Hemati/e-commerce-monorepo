@@ -1,5 +1,5 @@
 import axiosInstance from "@/lib/axiosInstance";
-import { Product } from "@repo/validation";
+import { ProductBase } from "@repo/validation";
 
 export async function getProducts() {
   const { data } = await axiosInstance.get("/products");
@@ -12,7 +12,10 @@ export async function getProduct(productId: string) {
   return data;
 }
 
-export async function createProduct(newProduct: Product, productId?: string) {
+export async function createProduct(
+  newProduct: ProductBase,
+  productId?: string
+) {
   const url = productId ? `/products/${productId}` : "/products";
   const method = productId ? `patch` : "post";
   const { data } = await axiosInstance({ url, method, data: newProduct });
@@ -24,4 +27,8 @@ export async function deleteProduct(productId: string) {
   const { data } = await axiosInstance.delete(`/products/${productId}`);
 
   return data;
+}
+export async function getLatestProducts() {
+  const { data } = await axiosInstance.get("/products?limit=6");
+  return data.data;
 }

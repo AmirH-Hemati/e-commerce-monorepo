@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
-import { Order } from "@repo/validation";
-import { useDeleteOrder } from "../hooks/useDeleteOrder";
+import { OrderClient } from "@repo/validation";
+import Link from "next/link";
 
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<OrderClient>[] = [
   { accessorKey: "userId.email", header: "Email" },
   {
     accessorKey: "status",
@@ -61,7 +61,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const order = row.original;
 
       return (
         <DropdownMenu>
@@ -72,15 +72,13 @@ export const columns: ColumnDef<Order>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              variant="destructive"
-              onClick={() => navigator.clipboard.writeText(payment._id)}
-            >
-              Delete Payment
-            </DropdownMenuItem> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View Order details</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/users/${order?.userId?._id}`}>View customer</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/orders/${order._id}`}>View Order details</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

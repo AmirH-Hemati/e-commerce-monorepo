@@ -3,23 +3,6 @@ import { getProduct } from "@/features/products/services/productServices";
 
 import Image from "next/image";
 
-// const product: productType = {
-//   id: 1,
-//   name: "Adidas CoreFit T-Shirt",
-//   shortDescription:
-//     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//   description:
-//     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//   price: 59.9,
-//   sizes: ["xs", "s", "m", "l", "xl"],
-//   colors: ["gray", "purple", "green"],
-//   images: {
-//     gray: "/products/1g.png",
-//     purple: "/products/1p.png",
-//     green: "/products/1gr.png",
-//   },
-// };
-
 export const generateMetadata = async ({
   params,
 }: {
@@ -46,7 +29,8 @@ const ProductPage = async ({
 
   const selectedSize = size || (product.sizes[0] as string);
   const selectedColor = color || (product.colors[0] as string);
-  const image =
+
+  const image: string =
     product.images.find((image) => image.color === selectedColor)?.image || "";
 
   return (

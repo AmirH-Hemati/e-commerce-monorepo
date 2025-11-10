@@ -50,7 +50,7 @@ export const signup = catchAsync(
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
     });
-    createSendToken(res, newUser._id, newUser);
+    createSendToken(res, newUser._id as Types.ObjectId, newUser);
   }
 );
 
@@ -64,7 +64,7 @@ export const login = catchAsync(
     if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError("Incorrect email or password!", 401));
     }
-    createSendToken(res, user._id, user);
+    createSendToken(res, user._id as Types.ObjectId, user);
   }
 );
 

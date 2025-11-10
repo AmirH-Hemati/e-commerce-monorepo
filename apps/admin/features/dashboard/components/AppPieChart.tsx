@@ -36,6 +36,7 @@ const chartConfig = {
     color: "var(--chart-5)",
   },
 } satisfies ChartConfig;
+type OrderStatus = "Pending" | "Paid" | "Processing" | "Shipped" | "Delivered";
 
 export function AppPieChart() {
   const { orders, isLoading } = useGetOrderStatus();
@@ -57,7 +58,7 @@ export function AppPieChart() {
             innerRadius={60}
             strokeWidth={5}
           >
-            {orders.map((item, i) => (
+            {orders.map((item: { status: OrderStatus }, i: number) => (
               <Cell key={i} fill={chartConfig[item.status].color} />
             ))}
             <Label

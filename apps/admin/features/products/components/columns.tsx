@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
-import { Product } from "@repo/validation";
+import { ProductClient } from "@repo/validation";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
@@ -20,7 +20,7 @@ import DuplicatedProduct from "./DuplicatedProduct";
 
 export const columns = (
   deleteProduct: (id: string) => void
-): ColumnDef<Product>[] => {
+): ColumnDef<ProductClient>[] => {
   return [
     {
       accessorKey: "image",

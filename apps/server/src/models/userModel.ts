@@ -1,12 +1,12 @@
-import mongoose, { Document, Query } from "mongoose";
+import mongoose, { Document, Query, Types } from "mongoose";
 import bcrypt from "bcryptjs";
-import { User } from "@repo/validation";
-export interface UserDocument extends User, Document {
-  _id: mongoose.Types.ObjectId;
+import { RegisterServer } from "@repo/validation";
+export interface UserDocument extends Document, RegisterServer {
+  _id: Types.ObjectId;
   role: string;
+  photo: string;
   active: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  passwordConfirm: string | undefined;
   correctPassword(
     candidatePassword: string,
     userPassword: string
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema<UserDocument>(
     },
     photo: {
       type: String,
-      default: "./src/img/users/default.png",
+      default: "default.png",
     },
 
     role: {
@@ -53,6 +53,7 @@ const userSchema = new mongoose.Schema<UserDocument>(
         },
         message: "Password are not the same !",
       },
+      select: false,
     },
 
     active: {
@@ -67,7 +68,7 @@ const userSchema = new mongoose.Schema<UserDocument>(
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
-  delete this.passwordConfirm;
+  this.passwordConfirm = undefined;
   next();
 });
 

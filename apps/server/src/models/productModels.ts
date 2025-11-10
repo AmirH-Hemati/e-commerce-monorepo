@@ -1,9 +1,9 @@
 import mongoose, { Document, Query } from "mongoose";
 import slug from "slug";
-import { Product } from "@repo/validation";
+import { ProductBase } from "@repo/validation";
 
-export interface ProductDocument extends Omit<Product, "_id">, Document {
-  _id: mongoose.Types.ObjectId;
+export interface ProductDocument extends Document, ProductBase {
+  slug: string;
 }
 
 const productSchema = new mongoose.Schema<ProductDocument>(
@@ -48,7 +48,9 @@ const productSchema = new mongoose.Schema<ProductDocument>(
 );
 
 productSchema.pre("save", function (next) {
-  this.slug = slug(this.name);
+  if (this.isModified("name")) {
+    this.slug = slug(this.name);
+  }
   next();
 });
 
@@ -60,4 +62,4 @@ productSchema.pre<Query<ProductDocument[], ProductDocument>>(
   }
 );
 
-export default mongoose.model("Product", productSchema);
+export default mongoose.model<ProductDocument>("Product", productSchema);

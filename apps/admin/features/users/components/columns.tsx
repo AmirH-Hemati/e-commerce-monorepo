@@ -10,20 +10,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { RegisterFull } from "@repo/validation";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export type User = {
-  id: string;
-  avatar: string;
-  fullName: string;
-  email: string;
-  status: "active" | "inactive";
-};
-
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<RegisterFull>[] = [
   {
     accessorKey: "photo",
     header: "Avatar",
@@ -54,17 +47,17 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "role",
     header: "role",
     cell: ({ row }) => {
-      const status = row.getValue("role");
+      const role = row.getValue("role");
 
       return (
         <div
           className={cn(
             `p-1 rounded-md w-max text-xs`,
-            status === "user" && "bg-green-500/40",
-            status === "admin" && "bg-red-500/40"
+            role === "user" && "bg-green-500/40",
+            role === "admin" && "bg-red-500/40"
           )}
         >
-          {status as string}
+          {role as string}
         </div>
       );
     },
@@ -73,7 +66,6 @@ export const columns: ColumnDef<User>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
-      console.log(user._id);
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

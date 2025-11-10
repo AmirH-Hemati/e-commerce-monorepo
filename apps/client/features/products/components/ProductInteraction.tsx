@@ -1,47 +1,48 @@
 "use client";
 
+import useCartStore from "@/stores/cartStore";
+import { ProductClient } from "@repo/validation";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { toast } from "react-toastify";
-import { Product } from "@repo/validation";
-import useCartStore from "@/stores/cartStore";
+import { useState } from "react";
 const ProductInteraction = ({
   product,
   selectedSize,
   selectedColor,
 }: {
-  product: Product;
+  product: ProductClient;
   selectedSize: string;
   selectedColor: string;
 }) => {
+  const [count, setCount] = useState(0);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const {
-    handleIncreaseProduct,
-    handlelDecreaseProduct,
-    getTotalProductQty,
-    cart,
-  } = useCartStore();
+
+  const { handleIncreaseProduct } = useCartStore();
+
   const handleTypeChange = (type: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set(type, value);
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-  console.log(cart);
+
   const productWithTypes = {
     ...product,
     selectedColor,
     selectedSize,
   };
 
+  const handleAddToCart = () => {
+    handleIncreaseProduct({ ...productWithTypes, qty: count });
+  };
   return (
     <div className="flex flex-col gap-4 mt-4">
       {/* SIZE */}
       <div className="flex flex-col gap-2 text-xs">
         <span className="text-gray-500">Size</span>
         <div className="flex items-center gap-2">
-          {product.sizes.map((size) => (
+          {product.sizes.map((size: string) => (
             <div
               className={`cursor-pointer border p-0.5 ${
                 selectedSize === size ? "border-gray-600" : "border-gray-300"
@@ -66,7 +67,7 @@ const ProductInteraction = ({
       <div className="flex flex-col gap-2 text-sm">
         <span className="text-gray-500">Color</span>
         <div className="flex items-center gap-2">
-          {product.colors.map((color) => (
+          {product.colors.map((color: string) => (
             <div
               className={`cursor-pointer border p-0.5 ${
                 selectedColor === color ? "border-gray-300" : "border-white"
@@ -85,14 +86,14 @@ const ProductInteraction = ({
         <div className="flex items-center gap-2">
           <button
             className="cursor-pointer border border-gray-300 p-1"
-            onClick={() => handlelDecreaseProduct(productWithTypes)}
+            onClick={() => setCount((prev) => Math.max(1, prev - 1))}
           >
             <Minus className="w-4 h-4" />
           </button>
-          <span>{getTotalProductQty(productWithTypes)}</span>
+          <span>{count}</span>
           <button
             className="cursor-pointer border border-gray-300 p-1"
-            onClick={() => handleIncreaseProduct(productWithTypes)}
+            onClick={() => setCount((prev) => prev + 1)}
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -100,7 +101,7 @@ const ProductInteraction = ({
       </div>
       {/* BUTTONS */}
       <button
-        onClick={() => handleIncreaseProduct(productWithTypes)}
+        onClick={handleAddToCart}
         className="bg-gray-800 text-white px-4 py-2 rounded-md shadow-lg flex items-center justify-center gap-2 cursor-pointer text-sm font-medium"
       >
         <Plus className="w-4 h-4" />

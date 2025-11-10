@@ -30,18 +30,27 @@ import {
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product, productSchema } from "@repo/validation";
+import {
+  baseProductSchema,
+  ProductBase,
+  ProductClient,
+} from "@repo/validation";
 import { useForm } from "react-hook-form";
 import { useCreateProduct } from "../hooks/useCreateProduct";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
 
-export default function AddProductForm({ product }: { product?: Product }) {
+export default function AddProductForm({
+  product,
+}: {
+  product?: ProductClient;
+}) {
   const isEditSession = Boolean(product?._id || "");
 
   const { createProduct, isCreating } = useCreateProduct();
   const { updateProduct, isUpdating } = useUpdateProduct();
-  const form = useForm<Product>({
-    resolver: zodResolver(productSchema),
+  const isWorking = isCreating || isUpdating;
+  const form = useForm<ProductBase>({
+    resolver: zodResolver(baseProductSchema),
     defaultValues: isEditSession
       ? product
       : {
@@ -55,9 +64,9 @@ export default function AddProductForm({ product }: { product?: Product }) {
         },
   });
 
-  function submitProductForm(data: Product) {
+  function submitProductForm(data: ProductBase) {
     if (isEditSession) {
-      updateProduct({ newProduct: data, id: product?._id });
+      updateProduct({ newProduct: data, id: product?._id as string });
     } else {
       createProduct(data);
     }
@@ -297,7 +306,9 @@ export default function AddProductForm({ product }: { product?: Product }) {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isWorking}>
+                  {isEditSession ? "Create New Product" : "Update Product"}
+                </Button>
               </form>
             </Form>
           </SheetDescription>

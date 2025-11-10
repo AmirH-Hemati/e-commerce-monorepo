@@ -1,7 +1,7 @@
 "use client";
 import { deleteImage } from "@/api/uploadApi";
 import { Progress } from "@/components/ui/progress";
-import { Product } from "@repo/validation";
+import { ProductBase } from "@repo/validation";
 import axios, { AxiosProgressEvent } from "axios";
 import { X } from "lucide-react";
 import React, { useState } from "react";
@@ -12,7 +12,7 @@ export default function InputFile({
   color,
   isEditSession,
 }: {
-  form: UseFormReturn<Product>;
+  form: UseFormReturn<ProductBase>;
   color: string;
   isEditSession: boolean;
 }) {
@@ -29,8 +29,10 @@ export default function InputFile({
       "http://localhost:4000/api/v1/upload",
       formData,
       {
-        onUploadProgress: (data: AxiosProgressEvent) => {
-          setProgress((data.loaded / data.total) * 100);
+        onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+          if (progressEvent.total) {
+            setProgress((progressEvent.loaded / progressEvent.total) * 100);
+          }
         },
       }
     );
@@ -45,8 +47,8 @@ export default function InputFile({
   async function handelDeleteImage() {
     await deleteImage(url);
     const images = form.getValues("images");
-    delete images[color];
-    form.setValue("images", images);
+    const updatedImages = images.filter((img) => img.color !== color);
+    form.setValue("images", updatedImages);
     setUrl("");
     setProgress(0);
   }

@@ -1,4 +1,6 @@
-export async function getMyOrders() {
+import { Orders } from "@repo/validation";
+
+export async function getMyOrders(): Promise<Orders> {
   const res = await fetch(`http://localhost:4000/api/v1/orders/myOrders`, {
     credentials: "include",
   });

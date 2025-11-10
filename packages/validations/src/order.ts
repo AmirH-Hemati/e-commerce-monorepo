@@ -1,15 +1,18 @@
+import { baseProductSchema } from "./product";
 import { z } from "zod";
-
-const orderSchema = z.object({
-  _id: z.string().optional(),
-  userId: z.string().optional(),
+import { registerFullSchema } from "./user";
+export const baseOrderSchema = z.object({
   orderItems: z.array(
     z.object({
-      productId: z.string(),
+      _id: z.string(),
+      productId: baseProductSchema,
       name: z.string(),
       quantity: z.number().min(1),
+      selectedColor: z.string(),
+      selectedSize: z.string(),
     })
   ),
+  userId: registerFullSchema,
   address: z.object({
     email: z.email(),
     phone: z.string(),
@@ -18,9 +21,20 @@ const orderSchema = z.object({
   }),
   totalAmount: z.number().min(0),
   status: z.enum(["Pending", "Paid", "Shipped", "delivered"]),
-  createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
+});
+export const orderSchemaServer = baseOrderSchema.extend({
+  _id: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export const orderSchemaClient = baseOrderSchema.extend({
+  _id: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 
-export type Order = z.infer<typeof orderSchema>;
-export type Orders = Order[];
+export type OrderSchema = z.infer<typeof baseOrderSchema>;
+export type OrderClient = z.infer<typeof orderSchemaClient>;
+export type Orderserver = z.infer<typeof orderSchemaServer>;
+
+export type Orders = OrderClient[];

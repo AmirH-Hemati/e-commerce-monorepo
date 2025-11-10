@@ -14,10 +14,12 @@ import {
   deleteMe,
   getMe,
 } from "../controllers/userControllers.js";
+import { validate } from "../utils/validate.js";
+import { registerSchemaServer, loginSchema } from "@repo/validation";
 
 const router = express.Router();
-router.post("/signup", signup);
-router.post("/login", login);
+router.post("/signup", validate(registerSchemaServer), signup);
+router.post("/login", validate(loginSchema), login);
 
 router.use(protect);
 

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   login,
+  logout,
   protect,
   signup,
   updateMyPassword,
@@ -20,6 +21,7 @@ import { registerSchemaServer, loginSchema } from "@repo/validation";
 const router = express.Router();
 router.post("/signup", validate(registerSchemaServer), signup);
 router.post("/login", validate(loginSchema), login);
+router.post("/logout", logout);
 
 router.use(protect);
 

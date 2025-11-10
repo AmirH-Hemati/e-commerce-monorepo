@@ -1,4 +1,4 @@
-import UserProfileIcon from "@/features/Authentication/UserProfileIcon";
+import UserProfileIcon from "@/features/Authentication/components/UserProfileIcon";
 import { Home } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

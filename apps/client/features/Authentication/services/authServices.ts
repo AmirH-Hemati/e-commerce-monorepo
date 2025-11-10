@@ -41,3 +41,16 @@ export async function login(data: LoginFormInputs) {
 
   return responseData;
 }
+export async function logout() {
+  const res = await fetch("http://localhost:4000/api/v1/users/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  const responseData = await res.json();
+  if (!res.ok) {
+    throw new Error(responseData.message || "Logout failed!");
+  }
+
+  return responseData;
+}

@@ -13,8 +13,13 @@ import { LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useLogout } from "@/features/authentication/hooks/useLogout";
 export default function Navbar() {
   const { setTheme } = useTheme();
+  const { logout, isPending } = useLogout();
+  function handelLogout() {
+    logout();
+  }
   return (
     <nav className="flex items-center justify-between p-4 sticky top-0 bg-background z-10">
       {/* left */}
@@ -70,7 +75,11 @@ export default function Navbar() {
               <Settings className="w-5 h-5 mr-2" />
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem
+              variant="destructive"
+              disabled={isPending}
+              onClick={handelLogout}
+            >
               <LogOut className="w-5 h-5 mr-2" />
               Logout
             </DropdownMenuItem>

@@ -68,6 +68,17 @@ export const login = catchAsync(
   }
 );
 
+export const logout = (req: Request, res: Response) => {
+  res.cookie("token", "logout", {
+    expires: new Date(Date.now(0)),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    status: "success",
+  });
+};
+
 export const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     let token;

@@ -6,3 +6,8 @@ export async function login(data: LoginFormInputs) {
 
   return responseData;
 }
+export async function logout() {
+  const { data: responseData } = await axiosInstance.post("/users/logout");
+
+  return responseData;
+}

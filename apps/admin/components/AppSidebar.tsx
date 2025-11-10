@@ -32,8 +32,14 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from "./ui/sidebar";
+import { useLogout } from "@/features/authentication/hooks/useLogout";
 
 export default function AppSidebar() {
+  const { logout, isPending } = useLogout();
+
+  function handelLogout() {
+    logout();
+  }
   return (
     <Sidebar collapsible="icon">
       {/* sidebar header  */}
@@ -171,7 +177,11 @@ export default function AppSidebar() {
                 <DropdownMenuItem>
                   <Settings /> Setting
                 </DropdownMenuItem>
-                <DropdownMenuItem variant="destructive">
+                <DropdownMenuItem
+                  variant="destructive"
+                  disabled={isPending}
+                  onClick={handelLogout}
+                >
                   <LogOut />
                   Sign out
                 </DropdownMenuItem>
@@ -182,25 +192,4 @@ export default function AppSidebar() {
       </SidebarFooter>
     </Sidebar>
   );
-}
-
-{
-  /* 
-  <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup> */
 }

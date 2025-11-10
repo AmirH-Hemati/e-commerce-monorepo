@@ -2,14 +2,19 @@
 import { LogOut, Settings, ShoppingBag, User, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { useUser } from "./hooks/useUser";
+import { useUser } from "../hooks/useUser";
+import { useLogout } from "../hooks/useLogout";
 
 export default function UserProfileIcon() {
   const { user, isLoading, isAuthenticated } = useUser();
+  const { logout, isPending } = useLogout();
   const [open, setOpen] = useState(false);
 
   if (isLoading) return <p>Loading...</p>;
 
+  function handelLogout() {
+    logout();
+  }
   if (!isAuthenticated)
     return (
       <Link href="/login" className="text-gray-700">
@@ -35,9 +40,9 @@ export default function UserProfileIcon() {
             </div>
             <div>
               <p className="text-sm font-medium text-gray-800">
-                {user.data.name}
+                {user?.data?.name}
               </p>
-              <p className="text-xs text-gray-500"> {user.data.email}</p>
+              <p className="text-xs text-gray-500"> {user?.data?.email}</p>
             </div>
           </div>
 
@@ -67,7 +72,8 @@ export default function UserProfileIcon() {
             </Link>
 
             <button
-              onClick={() => console.log("Logout")}
+              disabled={isPending}
+              onClick={handelLogout}
               className="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition w-full text-left"
             >
               <LogOut className="w-4 h-4" />

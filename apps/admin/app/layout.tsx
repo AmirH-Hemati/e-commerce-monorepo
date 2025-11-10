@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import AppSidebar from "@/components/AppSidebar";
-import Navbar from "@/components/Navbar";
+
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { ToastContainer } from "react-toastify";
@@ -39,14 +37,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SidebarProvider>
-              <AppSidebar />
+            {children}
 
-              <main className="flex-1">
-                <Navbar />
-                <div className="px-4">{children}</div>
-              </main>
-            </SidebarProvider>
             <ToastContainer
               position="top-right"
               autoClose={5000}

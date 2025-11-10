@@ -1,6 +1,6 @@
 "use client";
 import { DataTable } from "@/components/DataTable";
-import { columns as productColumns } from "../../features/products/components/columns";
+import { columns as productColumns } from "../../../features/products/components/columns";
 import { useProducts } from "@/features/products/hooks/useProducts";
 import { useDeleteProduct } from "@/features/products/hooks/useDeleteProduct";
 

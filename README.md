@@ -1,135 +1,157 @@
-# Turborepo starter
+# 🛍️ E-Commerce Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+### A Modern E-Commerce Project Built with Next.js and Turborepo
 
-## Using this example
+E-Commerce Monorepo is a web development project organized using a **Monorepo architecture**. It brings application code and shared packages together in a single repository, making development, code reuse, and project maintenance easier.
 
-Run the following command:
+The project uses **Turborepo, npm Workspaces, Next.js, and TypeScript** to organize applications and shared tooling within a unified development environment.
 
-```sh
-npx create-turbo@latest
+## 🏗️ Architecture
+
+### Monorepo Structure
+
+The repository follows a workspace-based structure with separate application and package directories.
+
+```text
+e-commerce-monorepo/
+├── apps/
+│   ├── web/                  # Web application
+│   └── ...                   # Additional applications
+│
+├── packages/
+│   ├── ui/                   # Shared UI components
+│   ├── eslint-config/        # Shared ESLint configuration
+│   └── typescript-config/    # Shared TypeScript configuration
+│
+├── package.json              # Root scripts and workspaces
+├── package-lock.json
+└── turbo.json                # Turborepo task configuration
 ```
 
-## What's inside?
+*The directory names above illustrate the intended organization. Refer to the actual repository for the exact workspace names.*
 
-This Turborepo includes the following packages/apps:
+### Why Monorepo?
 
-### Apps and Packages
+A monorepo allows multiple applications and shared packages to be maintained in one repository.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+Key benefits include:
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- **Code Reusability:** Share components and configurations across applications.
+- **Centralized Dependency Management:** Manage workspace dependencies from the repository root.
+- **Consistent Tooling:** Use shared TypeScript and ESLint configurations.
+- **Simplified Development:** Run common development and build tasks through Turborepo.
+- **Maintainability:** Keep related applications and packages within a unified codebase.
 
-### Utilities
+## 🛠️ Tech Stack
 
-This Turborepo has some additional tools already setup for you:
+### Frontend
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Monorepo & Development Tools
+- [Turborepo](https://turbo.build/repo)
+- npm Workspaces
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- Git & GitHub
 
-### Build
+## 📦 Shared Packages
 
-To build all apps and packages, run the following command:
+The repository uses dedicated packages for common functionality and development configuration.
 
-```
-cd my-turborepo
+- **UI Package:** A shared component library for reusable UI elements.
+- **ESLint Configuration:** Centralized linting rules across workspaces.
+- **TypeScript Configuration:** Shared compiler configurations for consistent type checking.
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+## 🚀 Getting Started
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+### Prerequisites
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+Make sure you have the following installed:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+- [Node.js](https://nodejs.org/) — Version 18 or later, subject to the repository's package requirements.
+- npm — The repository specifies npm as its package manager.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+### 1. Clone the Repository
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+git clone https://github.com/AmirH-Hemati/e-commerce-monorepo.git
+cd e-commerce-monorepo
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### 2. Install Dependencies
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+Install dependencies for all configured workspaces:
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+npm install
 ```
 
-### Remote Caching
+### 3. Start Development
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+Run the development scripts through Turborepo:
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+npm run dev
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+### 4. Build Applications
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+Build the configured applications and packages:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+npm run build
 ```
 
-## Useful Links
+### 5. Run Code Quality Checks
 
-Learn more about the power of Turborepo:
+Run the configured linting tasks:
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+```bash
+npm run lint
+```
+
+Format supported files:
+
+```bash
+npm run format
+```
+
+Run TypeScript checks where configured:
+
+```bash
+npm run check-types
+```
+
+*Available commands depend on the scripts defined in the root and individual workspace `package.json` files.*
+
+## 🎯 Project Goals
+
+This project focuses on practical experience with:
+
+- Monorepo architecture and workspace management.
+- Next.js application development.
+- TypeScript and shared configuration.
+- Reusable UI components and package organization.
+- Managing development and build tasks with Turborepo.
+- Improving maintainability through code reuse and consistent tooling.
+
+## 🔮 Future Improvements
+
+Potential areas for further development include:
+
+- Expanding e-commerce functionality.
+- Adding or improving product browsing and shopping workflows.
+- Improving shared UI components and design consistency.
+- Adding automated unit and integration tests.
+- Integrating CI/CD workflows.
+- Improving application performance and deployment processes.
+
+## 👨‍💻 Author
+
+Developed as a web development project to explore modern frontend technologies, Monorepo architecture, and reusable development tooling.
+
+---
+
+**E-Commerce Monorepo — Building maintainable web applications with shared packages and modern development tools.**
